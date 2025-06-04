@@ -11,7 +11,7 @@ app.use(bodyParser.json());
 
 app.use(cookieParser());
 
-app.get("/stkpush", async (req, res) => {
+app.post("/stkpush", async (req, res) => {
   try {
     const { phone, amount, reference } = req.body;
 
@@ -27,7 +27,16 @@ app.get("/stkpush", async (req, res) => {
   }
 });
 
+// testing route
+app.get("/test-payment", async (req, res) => {
+  try {
+    const response = await initiateSTKPush("254746687102", "10", "test123");
 
+    res.json(response);
+  } catch (error) {
+    res.status(500).json({ error: error.message });
+  }
+});
 
 app.listen(8080, () => {
   console.log("app listening on http://localhost:8080");
