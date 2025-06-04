@@ -2,7 +2,6 @@ import cookieParser from "cookie-parser";
 import "dotenv/config";
 import express from "express";
 import bodyParser from "body-parser";
-import { getTokenAccess } from "./accessToken.js";
 import { initiateSTKPush } from "./stkPush.js";
 
 const app = express();
@@ -12,7 +11,7 @@ app.use(bodyParser.json());
 
 app.use(cookieParser());
 
-app.get("/stkpush", async(req, res) => {
+app.get("/stkpush", async (req, res) => {
   try {
     const { phone, amount, reference } = req.body;
 
@@ -20,16 +19,15 @@ app.get("/stkpush", async(req, res) => {
       return res.status(400).json({ error: "Missing required parameters" });
     }
 
-    const response = await initiateSTKPush(phone, amount, reference)
+    const response = await initiateSTKPush(phone, amount, reference);
 
-    res.json(response)
-
-
-
+    res.json(response);
   } catch (error) {
-    res.status(500).json({ error: 'Failed to initiate STK push' });
+    res.status(500).json({ error: "Failed to initiate STK push" });
   }
 });
+
+
 
 app.listen(8080, () => {
   console.log("app listening on http://localhost:8080");
