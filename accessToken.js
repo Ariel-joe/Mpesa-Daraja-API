@@ -1,11 +1,10 @@
 // generate tokens for authorization
 
 export const getTokenAccess = async () => {
-  const consumerKey = process.env.CONSUMERKEY;
+  const consumerKey = process.env.MPESA_CONSUMER_KEY;
   const consumerSecret = process.env.CONSUMERSECRET;
 
-  const url =
-    "https://sandbox.safaricom.co.ke/oauth/v1/generate?grant_type=client_credentials";
+  const url = "https://sandbox.safaricom.co.ke/oauth/v1/generate?grant_type=client_credentials";
 
   // url for live
   // const url = "https://api.safaricom.co.ke/oauth/v1/generate?grant_type=client_credentials"
