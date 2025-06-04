@@ -1,39 +1,34 @@
 import cookieParser from "cookie-parser";
 import "dotenv/config";
 import express from "express";
+import bodyParser from "body-parser";
 import { getTokenAccess } from "./accessToken.js";
+import { initiateSTKPush } from "./stkPush.js";
 
 const app = express();
 
 app.use(express.json());
+app.use(bodyParser.json());
 
 app.use(cookieParser());
 
-getTokenAccess();
+app.get("/stkpush", async(req, res) => {
+  try {
+    const { phone, amount, reference } = req.body;
 
-// timestamp (this is for stkpush)
-const date = new Date();
-const timestamp =
-  date.getFullYear() +
-  ("0" + (date.getMonth() + 1)).slice(-2) +
-  ("0" + date.getDate()).slice(-2) +
-  ("0" + date.getHours()).slice(-2) +
-  ("0" + date.getMinutes()).slice(-2) +
-  ("0" + date.getSeconds()).slice(-2);
+    if (!phone || !amount || !reference) {
+      return res.status(400).json({ error: "Missing required parameters" });
+    }
 
-// generating stk password
-const shortCode = "N/A";
-const passkey = "";
-// timestamp is on line 17
+    const response = await initiateSTKPush(phone, amount, reference)
 
-const stk_password = new Buffer.from(shortCode + passkey + timestamp).toString(
-  "base64"
-);
+    res.json(response)
 
 
 
-app.get("/", (req, res) => {
-  return res.json({ message: "homepage" });
+  } catch (error) {
+    res.status(500).json({ error: 'Failed to initiate STK push' });
+  }
 });
 
 app.listen(8080, () => {

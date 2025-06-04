@@ -1,6 +1,6 @@
 import { getTokenAccess } from "./accessToken.js";
 
-const initiateSTKPush = async (phone, amount, reference) => {
+export const initiateSTKPush = async (phone, amount, reference) => {
   try {
     const accessToken = await getTokenAccess();
     const timestamp = new Date()
