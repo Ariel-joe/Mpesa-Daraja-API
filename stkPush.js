@@ -11,7 +11,7 @@ export const initiateSTKPush = async (phone, amount, reference) => {
       .slice(0, -5);
 
     const password = Buffer.from(
-      `${process.env.MPESA_BUSINESS_SHORTCODE}${process.env.MPESA_PASSKEY}${timestamp}`
+      `${process.env.MPESA_BUSINESS_SHORTCODE}${process.env.MPESA_PASS_KEY}${timestamp}`
     ).toString("base64");
 
     const payload = {
@@ -20,16 +20,16 @@ export const initiateSTKPush = async (phone, amount, reference) => {
       Timestamp: timestamp,
       TransactionType: "CustomerPayBillOnline",
       Amount: amount,
-      partyA: `254${phone.substring(phone.length - 9)}`,
-      partyB: process.env.MPESA_BUSINESS_SHORTCODE,
+      PartyA: `254${phone.substring(phone.length - 9)}`,
+      PartyB: process.env.MPESA_BUSINESS_SHORTCODE,
       PhoneNumber: `254${phone.substring(phone.length - 9)}`,
-      // CallBackURL: process.env.MPESA_CALLBACK_URL,
+      CallBackURL: process.env.MPESA_CALLBACK_URL,
       AccountReference: reference,
       TransactionDesc: "Payment for services",
     };
 
     const response = await axios.post(
-      "https://sandbox.safaricom.co.ke/oauth/v1/generate?grant_type=client_credentials",
+      "https://sandbox.safaricom.co.ke/mpesa/stkpush/v1/processrequest",
       payload,
       {
         headers: {
