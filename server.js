@@ -27,10 +27,22 @@ app.post("/stkpush", async (req, res) => {
   }
 });
 
+// hanlding callback
+app.post("/callback", (req, res) => {
+  
+  console.log("Callback hit");
+  const callbackData = req.body
+  
+  console.log(callbackData);
+
+  res.json({status: "success"})
+  
+})
+
 // testing route
 app.get("/test-payment", async (req, res) => {
   try {
-    const response = await initiateSTKPush("254746687102", "10", "test123");
+    const response = await initiateSTKPush("254746687102", "1", "test123");
 
     res.json(response);
   } catch (error) {
