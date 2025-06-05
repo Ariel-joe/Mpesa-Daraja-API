@@ -1,3 +1,5 @@
+import axios from "axios"
+
 import { getTokenAccess } from "./accessToken.js";
 
 export const initiateSTKPush = async (phone, amount, reference) => {
@@ -21,7 +23,7 @@ export const initiateSTKPush = async (phone, amount, reference) => {
       partyA: `254${phone.substring(phone.length - 9)}`,
       partyB: process.env.MPESA_BUSINESS_SHORTCODE,
       PhoneNumber: `254${phone.substring(phone.length - 9)}`,
-      CallBackURL: process.env.MPESA_CALLBACK_URL,
+      // CallBackURL: process.env.MPESA_CALLBACK_URL,
       AccountReference: reference,
       TransactionDesc: "Payment for services",
     };
