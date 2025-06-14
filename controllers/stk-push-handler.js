@@ -1,4 +1,4 @@
-import { initiateSTKPush } from "../stkPush.js";
+import { initiateSTKPush } from "../services/stkPush.js";
 
 export const stkPushHandler = async (req, res) => {
   try {
@@ -14,5 +14,4 @@ export const stkPushHandler = async (req, res) => {
   } catch (error) {
     res.status(500).json({ error: "Failed to initiate STK push" });
   }
-}
-
+};
